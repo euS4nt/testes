@@ -2,7 +2,9 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require 'vendor/autoload.php'; // se instalou via composer
+require 'vendor/autoload.php'; // PHPMailer via Composer
+
+$config = require 'config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -15,21 +17,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
         // Configurações SMTP
         $mail->isSMTP();
-        $mail->Host       = 'smtp.office365.com';    // servidor SMTP Outlook/Office365
+        $mail->Host       = $config['smtp_host'];
         $mail->SMTPAuth   = true;
-        $mail->Username   = '3140926@fmu.edu.br';    // seu email Outlook
-        $mail->Password   = 'Fmu@553177';       // senha de app (não use senha normal)
+        $mail->Username   = $config['smtp_user'];
+        $mail->Password   = $config['smtp_pass'];
         $mail->SMTPSecure = 'STARTTLS';
-        $mail->Port       = 587;
+        $mail->Port       = $config['smtp_port'];
 
         // Remetente e destinatário
-        $mail->setFrom('3140926@fmu.edu.br', 'Contato Site');
-        $mail->addAddress('3140926@fmu.edu.br');    // onde você quer receber
-
-        // Responder para o cliente
+        $mail->setFrom($config['from_email'], $config['from_name']);
+        $mail->addAddress($config['to_email']);
         $mail->addReplyTo($email_cliente);
 
-        // Conteúdo do email
+        // Conteúdo
         $mail->isHTML(false);
         $mail->Subject = "$tipo - Novo Lead do Site";
 
@@ -56,23 +56,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8" />
-    <title>Automação de Email - Contato</title>
-    <style>
-      /* Seu CSS aqui - igual do exemplo anterior */
-      body { font-family: Arial, sans-serif; background: #0f172a; color: white; text-align: center; padding: 50px; }
-      h1 { margin-bottom: 30px; }
-      .btn { display: block; width: 260px; margin: 15px auto; padding: 15px; border: none; border-radius: 10px; font-size: 16px; cursor: pointer; transition: 0.3s; }
-      .comprar { background: #22c55e; }
-      .duvida { background: #3b82f6; }
-      .urgente { background: #ef4444; }
-      .btn:hover { transform: scale(1.05); opacity: 0.9; }
-      form { margin-top: 40px; background: #1e293b; padding: 25px; border-radius: 12px; max-width: 400px; margin-left: auto; margin-right: auto; }
-      input, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 6px; border: none; font-size: 14px; background: #334155; color: white; }
-      textarea { height: 110px; resize: none; }
-      button.enviar { background: #22c55e; color: white; padding: 12px; border: none; border-radius: 6px; cursor: pointer; width: 100%; font-size: 15px; }
-      button.enviar:hover { opacity: 0.9; }
-    </style>
+<meta charset="UTF-8">
+<title>Automação de Email - Contato</title>
+<style>
+body { font-family: Arial, sans-serif; background: #0f172a; color: white; text-align: center; padding: 50px; }
+h1 { margin-bottom: 30px; }
+.btn { display: block; width: 260px; margin: 15px auto; padding: 15px; border: none; border-radius: 10px; font-size: 16px; cursor: pointer; transition: 0.3s; }
+.comprar { background: #22c55e; }
+.duvida { background: #3b82f6; }
+.urgente { background: #ef4444; }
+.btn:hover { transform: scale(1.05); opacity: 0.9; }
+form { margin-top: 40px; background: #1e293b; padding: 25px; border-radius: 12px; max-width: 400px; margin-left: auto; margin-right: auto; }
+input, textarea { width: 100%; padding: 12px; margin: 10px 0; border-radius: 6px; border: none; font-size: 14px; background: #334155; color: white; }
+textarea { height: 110px; resize: none; }
+button.enviar { background: #22c55e; color: white; padding: 12px; border: none; border-radius: 6px; cursor: pointer; width: 100%; font-size: 15px; }
+button.enviar:hover { opacity: 0.9; }
+</style>
 </head>
 <body>
 
