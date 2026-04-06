@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Automação de Email</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+      text-align: center;
+      padding: 50px;
+    }
+
+    h1 {
+      margin-bottom: 40px;
+    }
+
+    .btn {
+      display: block;
+      width: 260px;
+      margin: 15px auto;
+      padding: 15px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .comprar { background: #22c55e; }
+    .duvida { background: #3b82f6; }
+    .urgente { background: #ef4444; }
+
+    .btn:hover {
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
+
+    .form-container {
+      display: none;
+      margin-top: 40px;
+      background: #1e293b;
+      padding: 25px;
+      border-radius: 12px;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: none;
+      font-size: 14px;
+    }
+
+    textarea {
+      height: 110px;
+      resize: none;
+      background: #334155;
+      color: #cbd5f5;
+    }
+
+    input {
+      background: #334155;
+      color: white;
+    }
+
+    button.enviar {
+      background: #22c55e;
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 15px;
+    }
+
+    button.enviar:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Serviço de Automação de Email</h1>
+
+  <button class="btn comprar" onclick="abrirFormulario('comprar')">
+    Quero Comprar
+  </button>
+
+  <button class="btn duvida" onclick="abrirFormulario('duvida')">
+    Tenho uma Dúvida
+  </button>
+
+  <button class="btn urgente" onclick="abrirFormulario('urgente')">
+    Problema Urgente
+  </button>
+
+  <div class="form-container" id="formContainer">
+    <h2 id="titulo"></h2>
+
+    <form action="https://submit-form.com/kNlCp8PYa" method="POST">
+
+      <!-- ASSUNTO DO EMAIL -->
+      <input type="hidden" name="_subject" id="assunto">
+
+      <!-- TEMPLATE BONITO NO EMAIL -->
+      <input type="hidden" name="_template" value="table">
+
+      <!-- EMAIL DO CLIENTE -->
+      <input type="email" name="email" placeholder="Seu email" required>
+
+      <!-- MENSAGEM AUTOMÁTICA -->
+      <textarea name="mensagem" id="mensagem" readonly></textarea>
+
+      <button type="submit" class="enviar">Enviar</button>
+    </form>
+  </div>
+
+  <script>
+    function abrirFormulario(tipo) {
+      const form = document.getElementById("formContainer");
+      const titulo = document.getElementById("titulo");
+      const assunto = document.getElementById("assunto");
+      const mensagem = document.getElementById("mensagem");
+
+      form.style.display = "block";
+
+      if (tipo === "comprar") {
+        titulo.innerText = "Quero Comprar";
+        assunto.value = "Quero Comprar - Novo Lead do Site";
+        mensagem.value = "Olá, tenho interesse em comprar o serviço de automação de email. Por favor, entre em contato comigo.";
+      }
+
+      if (tipo === "duvida") {
+        titulo.innerText = "Tenho uma Dúvida";
+        assunto.value = "Tenho uma Dúvida - Novo Lead do Site";
+        mensagem.value = "Olá, tenho uma dúvida sobre o serviço de automação de email. Poderia me ajudar?";
+      }
+
+      if (tipo === "urgente") {
+        titulo.innerText = "Problema Urgente";
+        assunto.value = "Problema Urgente - Novo Lead do Site";
+        mensagem.value = "Olá, estou com um problema urgente relacionado ao serviço de automação de email. Preciso de suporte o quanto antes.";
+      }
+
+      form.scrollIntoView({ behavior: "smooth" });
+    }
+  </script>
+
+</body>
+</html>
