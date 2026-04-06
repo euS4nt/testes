@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AutoMail Pro | Automatize seu Contato</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg: #0a0a0f;
+    --primary: #6C5CE7;
+    --secondary: #00F5A0;
+    --glass: rgba(255,255,255,0.05);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background: radial-gradient(circle at top, #111, #000);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 520px;
+    width: 100%;
+    padding: 40px;
+    border-radius: 24px;
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 0 40px rgba(108,92,231,0.2);
+    animation: fadeIn 0.8s ease;
+}
+
+h1 {
+    font-size: 34px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.highlight {
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+p {
+    color: #aaa;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.btn {
+    padding: 18px;
+    border-radius: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.25s;
+    border: 1px solid rgba(255,255,255,0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.2), transparent);
+    opacity: 0;
+    transition: 0.4s;
+}
+
+.btn:hover::before {
+    opacity: 1;
+}
+
+.primary {
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    border: none;
+}
+
+.secondary {
+    background: rgba(255,255,255,0.05);
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(20px);}
+    to {opacity: 1; transform: translateY(0);}
+}
+
+.footer {
+    margin-top: 25px;
+    font-size: 12px;
+    color: #666;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Envie seu e-mail em <span class="highlight">1 clique</span></h1>
+    
+    <p>
+        Com o AutoMail Pro você entra em contato instantaneamente sem precisar escrever nada.
+        Escolha uma opção abaixo e seu e-mail será aberto automaticamente.
+    </p>
+
+    <div class="buttons">
+        <a href="#" class="btn primary" data-subject="Quero Comprar">⚡ Quero Comprar</a>
+        <a href="#" class="btn secondary" data-subject="Tenho uma Dúvida">💡 Tenho uma Dúvida</a>
+        <a href="#" class="btn secondary" data-subject="Problema Urgente">⚠️ Problema Urgente</a>
+    </div>
+
+    <div class="footer">
+        © AutoMail Pro — Atendimento rápido e automatizado
+    </div>
+</div>
+
+<script>
+document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        const subject = this.getAttribute('data-subject');
+        const email = "3140926@fmu.edu.br";
+
+        let body = "";
+
+        if (subject === "Quero Comprar") {
+            body = `Olá,
+
+Tenho interesse em adquirir o AutoMail Pro.
+
+Gostaria de mais informações sobre:
+- Forma de pagamento
+- Prazo de acesso
+- Suporte disponível
+
+Aguardo retorno.`;
+        }
+
+        if (subject === "Tenho uma Dúvida") {
+            body = `Olá,
+
+Estou analisando o AutoMail Pro e tenho algumas dúvidas.
+
+Poderiam me ajudar?
+
+Obrigado.`;
+        }
+
+        if (subject === "Problema Urgente") {
+            body = `Olá,
+
+Estou com um problema e preciso de suporte urgente.
+
+Aguardo retorno o quanto antes.`;
+        }
+
+        const encodedSubject = encodeURIComponent(subject);
+        const encodedBody = encodeURIComponent(body);
+
+        const gmailURL = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodedSubject}&body=${encodedBody}`;
+        const mailtoURL = `mailto:${email}?subject=${encodedSubject}&body=${encodedBody}`;
+
+        const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+        if (isMobile) {
+            // celular → abre app de email
+            window.location.href = mailtoURL;
+        } else {
+            // computador → abre Gmail no navegador
+            window.open(gmailURL, '_blank');
+        }
+    });
+});
+</script>
+
+</body>
+</html>
